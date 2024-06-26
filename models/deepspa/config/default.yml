@@ -1,0 +1,24 @@
+general:
+  data_base_dir: /app/data
+  version: 1.0.0
+  description: DeepSpA model for incorporating anatomical awareness in the prediction of radiographic sacroiliitis
+
+execute:
+  - DicomImporter
+  - DeepSpARunner
+  - DataOrganizer
+
+modules:
+  DicomImporter:
+    source_dir: input_data
+    import_dir: sorted_data
+    sort_data: True
+    meta: 
+      mod: '%Modality'
+
+  DeepSpARunner:
+    n_preprocessing_workers: 8
+
+  DataOrganizer:
+    targets:
+      - json-->[i:sid]/deepspa_predictions.json
