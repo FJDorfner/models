@@ -1,156 +1,178 @@
 {
   "id": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
-  "name": "deepspa",
-  "title": "CT Lung cancer risk prediction",
+  "name": "DeepSpA",
+  "title": "Detection of radiographic sacroiliitis to classify axial Spondyloarthritis on pelvic radiographs",
   "summary": {
-    "description": "This algorithm analyzes non-contrast CT scans of the thorax and predicts the lung cancer risk. The model consists of two modules. The first one is a 3D region proposal network for nodule detection, which outputs all suspicious nodules for a subject. The second one selects the top five nodules based on the detection confidence, evaluates their cancer probabilities and combines them with a leaky noisy-or gate to obtain the probability of lung cancer for the subject. This model was the winner of the Data Science Bowl 2017 competition hosted on Kaggle.",
+    "description": "This tool combines a U-Net Segmentation Model with a ResNet-50 for Classification.",
     "inputs": [
       {
-        "label": "CT",
-        "description": "Chest CT",
+        "label": "DX",
+        "description": "Pelvic plain radiograph",
         "format": "DICOM",
-        "modality": "CT",
-        "bodypartexamined": "Chest",
-        "slicethickness": "2.5mm",
-        "non-contrast": true,
-        "contrast": false
+        "modality": "DX",
+        "bodypartexamined": "Pelvis"
       }
     ],
     "outputs": [
       {
         "type": "Prediction",
         "valueType": "number",
-        "label": "Lung thorax cancer nodule probability score",
-        "description": "The likelihood of the presence of cancer nodules in the lungs.",
+        "label": "Binarized prediction for the presence of r-axSpA",
+        "description": "Binarized prediction for the presence of r-axSpA, using the cut-off 0.59",
         "classes": []
       }
     ],
     "model": {
-      "architecture": "3D convolutional neural network",
+      "architecture": "2D convolutional neural network",
       "training": "supervised",
-      "cmpapproach": "3D"
+      "cmpapproach": "2D"
     },
     "data": {
       "training": {
-        "vol_samples": 2483
+        "vol_samples": 1483
       },
       "evaluation": {
-        "vol_samples": 506
+        "vol_samples": 939
       },
-      "public": true,
-      "external": false
+      "public": false,
+      "external": true
     }
   },
   "details": {
-    "name": " bodyct-dsb2017-grt123",
-    "version": "2.0.0",
-    "devteam": "DIAGNijmegen (Diagnostic Image Analysis Group, Radboud UMC, The Netherlands)",
-    "type": "3D Deep Leaky Noisy-or Network",
+    "name": "DeepSpA",
+    "version": "1.0.0",
+    "devteam": "AI-Assisted Healthcare (AIAH) Lab at Technical University of Munich and Charité Universitätsmedizin Berlin",
+    "type": "2D Convolutional Neural Network",
     "date": {
       "weights": "",
-      "code": "2023-07-04",
-      "pub": "2017-11-22"
+      "code": "2024-05-12",
+      "pub": "2024-05-12"
     },
-    "cite": "F. Liao, M. Liang, Z. Li, X. Hu and S. Song, 'Evaluate the Malignancy of Pulmonary Nodules Using the 3D Deep Leaky Noisy-or Network', in IEEE Transactions on Neural Networks and Learning Systems, vol. 30, no. 11, pp. 3484-3495, Nov. 2019, doi: 10.1109/TNNLS.2019.2892409.",
+    "cite": "Felix J. Dorfner, Janis L. Vahldiek, Leonhard Donle, Andrei Zhukov, Lina Xu, Hartmut Häntze, Marcus R. Makowski, Hugo J. W. L. Aerts, Fabian Proft, Valeria Rios Rodriguez, Judith Rademacher, Mikhail Protopopov, Hildrun Haibel, Torsten Diekhoff, Murat Torgutalp, Lisa C. Adams, Denis Poddubnyy and Keno K. Bressem, 'Incorporating Anatomical Awareness for Enhanced Generalizability and Progression Prediction in Deep Learning-Based Radiographic Sacroiliitis Detection', in arXiv, 2024, doi: https://doi.org/10.48550/arXiv.2405.07369",
     "license": {
-      "code": "MIT",
-      "weights": "MIT"
+      "code": "Apache-2.0",
+      "weights": "CC-BY-4.0"
     },
     "publications": [
       {
-        "title": "Evaluate the Malignancy of Pulmonary Nodules Using the 3D Deep Leaky Noisy-or Network",
-        "uri": "https://ieeexplore.ieee.org/abstract/document/8642524"
-      },
-      {
-        "title": "Deep Learning for Lung Cancer Detection on Screening CT Scans: Results of a Large-Scale Public Competition and an Observer Study with 11 Radiologists",
-        "uri": "https://pubmed.ncbi.nlm.nih.gov/34870218/"
+        "label": "Incorporating Anatomical Awareness for Enhanced Generalizability and Progression Prediction in Deep Learning-Based Radiographic Sacroiliitis Detection",
+        "uri": "https://arxiv.org/abs/2405.07369v1"
       }
     ],
-    "github": "https://github.com/DIAGNijmegen/bodyct-dsb2017-grt123",
-    "zenodo": "",
+    "github": "https://github.com/FJDorfner/Anatomy-Aware-Classification-axSpA",
+    "zenodo": "https://zenodo.org/records/11116990",
     "colab": "",
     "slicer": false
   },
   "info": {
     "use": {
       "title": "Intended use",
-      "text": "This algorithm analyzes non-contrast CT scans of the thorax, first it segments the lungs, subsequently it detects lung nodules within the lungs, and finally it predicts the lung cancer risk for the individual nodules and the scan as a whole. The algorithm is also hosted on Grand Challenge [1] and was the winner of the Data Science Bowl 2017 challenge on Kaggle [2]. ",
+      "text": "This tool combines a U-Net Segmentation Model with a ResNet-50 for Classification. More information can be found in the corresponding paper [1].",
       "references": [
         {
-          "label": "Lung cancer risk estimation algorithm on grand-challenge",
-          "uri": "https://grand-challenge.org/algorithms/dsb2017-grt123/"
-        },
-        {
-          "label": "Data Science Bowl 2017 challenge",
-          "uri": "https://www.kaggle.com/c/data-science-bowl-2017"
+          "label": "Incorporating Anatomical Awareness for Enhanced Generalizability and Progression Prediction in Deep Learning-Based Radiographic Sacroiliitis Detection",
+          "uri": "https://arxiv.org/abs/2405.07369v1"
         }
       ],
       "tables": []
     },
     "analyses": {
       "title": "Evaluation",
-      "text": "The evaluation of the model was done on the Data Science Bowl 2017 (DSB) dataset hosted on Kaggle [1] (this is no longer publicly available). The nodule detection was evaluated on the validation of the DSB dataset, which contained data from 198 cases and there were 71 (7 nodules smaller than 6 mm are ruled out) nodules in total. The Free Response Operating Characteristic (FROC) is used to evaluate the performance of the nodule detection. The case cancer classification was evaluated using the Area Under the Curve (AUC) metric on the training set and the testing set of respectively 1397 and 506 patient cases. The AUC and FROC graphs can be viewed in the publication [2]. For the final evaluation on the Data Science Bowl 2017 challenge, the model's performance was evaluated using the logistic loss on a private external dataset of 300 low-dose CT images [3], containing 100 cancer-positive scans and 200 cancer-negative scans. See tables for a summary of the results.",
+      "text": "The model was evaluated on three different external test datasets: GESPIC [1], OptiRef [2] and DAMACT [3,4,5], containing 536, 340, and 163 patients respectively. [6]",
       "references": [
         {
-          "label": "Data Science Bowl 2017 challenge",
-          "uri": "https://www.kaggle.com/c/data-science-bowl-2017"
+          "label": "The early disease stage in axial spondylarthritis: Results from thegerman spondyloarthritis inception cohort",
+          "uri": " https://doi.org/10.1002/art.24483"
         },
         {
-          "label": "Evaluate the Malignancy of Pulmonary Nodules Using the 3D Deep Leaky Noisy-or Network",
-          "uri": "https://ieeexplore.ieee.org/abstract/document/8642524"
+          "label": "Comparison of an online self-referral tool with a physician-based referral strategy for early recognition of patients with a high probability of axial spa",
+          "uri": " https://doi.org/10.1016/j.semarthrit.2020.07.018"
         },
         {
-          "label": "Evaluation paper external dataset Data Science Bowl 2017",
-          "uri": "https://pubmed.ncbi.nlm.nih.gov/34870218/"
+          "label": "Comparison of mri with radiography for detecting structural lesions of the sacroiliac joint using ct as standard of reference: results from the simact study",
+          "uri": "https://doi.org/10.1136/annrheumdis-2016-210640"
+        },
+        {
+          "label": "Ct-like images of the sacroiliac joint generated from mri using susceptibilityweighted imaging (swi) in patients with axial spondyloarthritis",
+          "uri": "https://doi.org/10.1136/rmdopen-2021-001656"
+        },
+        {
+          "label": "Choose wisely: imaging for diagnosis of axial spondyloarthritis.",
+          "uri": "https://doi.org/10.1136/annrheumdis-2021-220136"
+        },
+        {
+          "label": "Incorporating Anatomical Awareness for Enhanced Generalizability and Progression Prediction in Deep Learning-Based Radiographic Sacroiliitis Detection",
+          "uri": "https://arxiv.org/abs/2405.07369v1"
         }
       ],
       "tables": [
         {
-          "label": "Case cancer classification results on the DSB 2017 dataset",
+          "label": "Classification performance of the DeepSpA model on three different independent test datasets",
           "entries": {
-            "AUC on training set": "0.90",
-            "AUC on test set": "0.87",
-            "Logistic loss on test set": "0.39975"
-          }
-        },
-        {
-          "label": "Case cancer classification results on private external evaluation dataset.",
-          "entries": {
-            "AUC on all scans": "0.877 (95% CI: 0.842, 0.910)"
+            "GESPIC Test Dataset": {
+              "AUC": "0.899 (95% CI: 0.866, 0.928)",
+              "Balanced Accuracy": "0.821 (95% CI: 0.786, 0.853)",
+              "Sensitivity": "0.941 (95% CI: 0.908, 0.969)",
+              "Specificity": "0.700 (95% CI: 0.642, 0.760)"
+            },
+            "DAMACT Test Dataset": {
+              "AUC": "0.846 (95% CI: 0.779, 0.997)",
+              "Balanced Accuracy": "0.744 (95% CI: 0.670, 0.805)",
+              "Sensitivity": "0.851 (95% CI: 0.739, 0.945)",
+              "Specificity": "0.638 (95% CI: 0.548, 0.721)"
+            },
+            "OptiRef Test Dataset": {
+              "AUC": "0.957 (95% CI: 0.926, 0.979)",
+              "Balanced Accuracy": "0.906 (95% CI: 0.868, 0.942)",
+              "Sensitivity": "0.934 (95% CI: 0.870, 0.986)",
+              "Specificity": "0.878 (95% CI: 0.839, 0.910)"
+            }
           }
         }
       ]
     },
     "evaluation": {
       "title": "Evaluation data",
-      "text": "The model was evaluated on the testing set of 506 patient cases the Data Science Bowl 2017 (DSB) hosted on Kaggle [1] (this is no longer publicly available). ",
+      "text": "The model was evaluated on three different external test datasets: GESPIC [1], OptiRef [2] and DAMACT [3,4,5], containing 536, 340, and 163 patients respectively. [6]",
       "references": [
         {
-          "label": "Data Science Bowl 2017 challenge",
-          "uri": "https://www.kaggle.com/c/data-science-bowl-2017"
+          "label": "The early disease stage in axial spondylarthritis: Results from thegerman spondyloarthritis inception cohort",
+          "uri": " https://doi.org/10.1002/art.24483"
+        },
+        {
+          "label": "Comparison of an online self-referral tool with a physician-based referral strategy for early recognition of patients with a high probability of axial spa",
+          "uri": " https://doi.org/10.1016/j.semarthrit.2020.07.018"
+        },
+        {
+          "label": "Comparison of mri with radiography for detecting structural lesions of the sacroiliac joint using ct as standard of reference: results from the simact study",
+          "uri": "https://doi.org/10.1136/annrheumdis-2016-210640"
+        },
+        {
+          "label": "Ct-like images of the sacroiliac joint generated from mri using susceptibilityweighted imaging (swi) in patients with axial spondyloarthritis",
+          "uri": "https://doi.org/10.1136/rmdopen-2021-001656"
+        },
+        {
+          "label": "Choose wisely: imaging for diagnosis of axial spondyloarthritis.",
+          "uri": "https://doi.org/10.1136/annrheumdis-2021-220136"
+        },
+        {
+          "label": "Incorporating Anatomical Awareness for Enhanced Generalizability and Progression Prediction in Deep Learning-Based Radiographic Sacroiliitis Detection",
+          "uri": "https://arxiv.org/abs/2405.07369v1"
         }
       ],
       "tables": []
     },
     "training": {
       "title": "Training data",
-      "text": "Two lung scan datasets were used to train the model: the LUng Nodule Analysis 2016 (LUNA16) dataset [1] [2] and the training set of the Data Science Bowl 2017 (DSB) hosted on Kaggle [3] (this is no longer publicly available). Nodules smaller than 6 mm were removed from the LUNA16 annotations before training. The LUNA16 dataset includes 1186 nodule labels in 888 patient cases annotated by radiologists. The DSB dataset includes 1397 and 198 patient cases in its training and validation sets respectively. The LUNA16 dataset is a subset from the images from the LIDC/IDRI dataset [3] that is available under a Creative Commons Attribution 3.0 Unported License.",
+      "text": "1483 radiographs from the PROOF study were used for training of the classification and segmentation model. [1,2]",
       "references": [
         {
-          "label": "LUng Nodule Analysis 2016 dataset part 1",
-          "uri": "https://zenodo.org/record/3723295"
+          "label": "Characteristics of patients with axial spondyloarthritis by geographic regions: Proof multicountry observational study baseline results.",
+          "uri": "https://doi.org/10.1093/rheumatology/keab901"
         },
         {
-          "label": "LUng Nodule Analysis 2016 dataset part 2",
-          "uri": "https://zenodo.org/record/4121926"
-        },
-        {
-          "label": "Data Science Bowl 2017 challenge",
-          "uri": "https://www.kaggle.com/c/data-science-bowl-2017"
-        },
-        {
-          "label": "The LIDC/IDRI dataset",
-          "uri": "https://www.cancerimagingarchive.net/collection/lidc-idri/"
+          "label": "Incorporating Anatomical Awareness for Enhanced Generalizability and Progression Prediction in Deep Learning-Based Radiographic Sacroiliitis Detection",
+          "uri": "https://arxiv.org/abs/2405.07369v1"
         }
       ],
       "tables": []
