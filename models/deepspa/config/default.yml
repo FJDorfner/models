@@ -6,6 +6,7 @@ general:
 execute:
   - DicomImporter
   - DeepSpARunner
+  - ReportExporter
   - DataOrganizer
 
 modules:
@@ -16,9 +17,33 @@ modules:
     meta: 
       mod: '%Modality'
 
-  DeepSpARunner:
-    n_preprocessing_workers: 8
+  ReportExporter:
+    includes:
+    - static:
+      label: Model
+      value: DeepSpA Classifier
+    - data: raxSpAprob
+      label: r-axSpA Probability
+      value: value
+    - data: raxSpAprob
+      label: r-axSpA Probability Description
+      value: description
+    - data: nraxSpAprob
+      label: no r-axSpA Probability
+      value: value
+    - data: nraxSpAprob
+      label: no r-axSpA Probability Description
+      value: description
+    - data: binarized_pred
+      label: Binarized Prediction
+      value: value
+    - data: binarized_pred
+      label: Binarized Prediction Description
+      value: description
 
   DataOrganizer:
     targets:
+      - png:mod=seg-->[i:sid]/[basename]
+      - png:mod=box-->[i:sid]/[basename]
+      - png:mod=gradcam-->[i:sid]/[basename]
       - json-->[i:sid]/deepspa_predictions.json
